@@ -1,0 +1,17 @@
+FROM 3arthqu4ke/headlessmc:latest
+
+WORKDIR /dido
+
+# Copia tu carpeta de mods local (si tienes otros mods ligeros)
+COPY mods /dido/mods
+COPY start.sh /dido/start.sh
+
+# Instalamos curl y descargamos Pixelmon directamente en la carpeta mods
+RUN apt-get update && apt-get install -y curl && \
+    curl -L -o /dido/mods/Pixelmon-1.21.1-9.3.16-universal.jar \
+    "https://forgecdn.net" && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN chmod +x /dido/start.sh
+
+CMD ["/dido/start.sh"]
